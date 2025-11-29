@@ -28,8 +28,8 @@ export default function ParticleBackground() {
       color: string
 
       constructor() {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
+        this.x = Math.random() * canvas!.width
+        this.y = Math.random() * canvas!.height
         this.vx = (Math.random() - 0.5) * 0.5
         this.vy = (Math.random() - 0.5) * 0.5
         this.size = Math.random() * 1.5
@@ -38,6 +38,9 @@ export default function ParticleBackground() {
       }
 
       update() {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
         this.x += this.vx
         this.y += this.vy
 
@@ -48,6 +51,8 @@ export default function ParticleBackground() {
       }
 
       draw() {
+        const ctx = canvasRef.current?.getContext("2d");
+        if (!ctx) return;
         ctx.fillStyle = this.color
         ctx.globalAlpha = this.opacity
         ctx.beginPath()
